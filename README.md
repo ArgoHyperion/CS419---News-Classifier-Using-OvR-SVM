@@ -1,632 +1,410 @@
-# <p align="center">
-
-# &#x20; <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python" />
-
-# &#x20; <img src="https://img.shields.io/badge/Scikit--Learn-ML-F7931E?logo=scikitlearn" />
-
-# &#x20; <img src="https://img.shields.io/badge/SVM-One--vs--Rest-success" />
-
-# &#x20; <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi" />
-
-# &#x20; <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react" />
-
-# &#x20; <img src="https://img.shields.io/badge/Vite-Build-646CFF?logo=vite" />
-
-# </p>
-
-# 
-
-# <h1 align="center">
-
-# News Domain Classification using One-vs-Rest SVM
-
-# </h1>
-
-# 
-
-# <p align="center">
-
-# Course Project — CS419 Information Retrieval
-
-# </p>
-
-# 
-
-# <p align="center">
-
-# An end-to-end news article classification system built using TF-IDF feature extraction,
-
-# Chi-Square feature selection, and One-vs-Rest Support Vector Machines.
-
-# The project includes both a machine learning backend and a modern React-based web interface.
-
-# </p>
-
-# Giới thiệu
-
-# \## 1. Introduction
-
-# 
-
-# \### Problem Statement
-
-# 
-
-# News portals publish thousands of articles every day across multiple domains such as business, politics, sports, technology, and entertainment. Automatically categorizing incoming articles is an important task in Information Retrieval and Text Mining systems.
-
-# 
-
-# This project focuses on multiclass news classification using traditional machine learning techniques. Given the title and content of a news article, the system predicts its corresponding category.
-
 <p align="center">
-
-&#x20; <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python" />
-
-&#x20; <img src="https://img.shields.io/badge/Scikit--Learn-ML-F7931E?logo=scikitlearn" />
-
-&#x20; <img src="https://img.shields.io/badge/SVM-One--vs--Rest-success" />
-
-&#x20; <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi" />
-
-&#x20; <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react" />
-
-&#x20; <img src="https://img.shields.io/badge/Vite-Build-646CFF?logo=vite" />
-
+  <img src="https://img.shields.io/badge/Python-3.10+-3776AB?logo=python" />
+  <img src="https://img.shields.io/badge/scikit--learn-Machine%20Learning-F7931E?logo=scikitlearn" />
+  <img src="https://img.shields.io/badge/SVM-One--vs--Rest-success" />
+  <img src="https://img.shields.io/badge/FastAPI-Backend-009688?logo=fastapi" />
+  <img src="https://img.shields.io/badge/React-Frontend-61DAFB?logo=react" />
+  <img src="https://img.shields.io/badge/Vite-Build-646CFF?logo=vite" />
 </p>
-
-
 
 <h1 align="center">
-
 News Domain Classification using One-vs-Rest SVM
-
 </h1>
 
-
-
 <p align="center">
-
 Course Project — CS419 Information Retrieval
-
 </p>
-
-
 
 <p align="center">
-
 An end-to-end news article classification system built using TF-IDF feature extraction,
-
 Chi-Square feature selection, and One-vs-Rest Support Vector Machines.
-
-The project includes both a machine learning backend and a modern React-based web interface.
-
+The project includes a FastAPI backend for model serving and a React-based frontend for interactive prediction.
 </p>
 
+---
 
+# Table of Contents
 
-\## 1. Introduction
+1. [Overview](#1-overview)
+2. [Dataset](#2-dataset)
+3. [Methodology](#3-methodology)
+4. [Model Training and Optimization](#4-model-training-and-optimization)
+5. [System Architecture](#5-system-architecture)
+6. [Project Structure](#6-project-structure)
+7. [Installation](#7-installation)
+8. [Running the Application](#8-running-the-application)
+9. [Prediction Workflow](#9-prediction-workflow)
+10. [Technologies Used](#10-technologies-used)
+11. [References](#11-references)
 
+---
 
+# 1. Overview
 
-\### Problem Statement
+## Problem Statement
 
+Automatic document classification is a fundamental task in Information Retrieval and Text Mining. News organizations continuously publish articles across various domains, making manual categorization expensive and difficult to scale.
 
+This project addresses the problem of multiclass news classification by automatically assigning a news article to its corresponding domain based on textual content.
 
-News portals publish thousands of articles every day across multiple domains such as business, politics, sports, technology, and entertainment. Automatically categorizing incoming articles is an important task in Information Retrieval and Text Mining systems.
+## Objectives
 
+- Build a complete text classification pipeline.
+- Explore TF-IDF document representation.
+- Apply Chi-Square feature selection to reduce dimensionality.
+- Implement multiclass classification using the One-vs-Rest SVM strategy.
+- Optimize model performance through Grid Search.
+- Deploy the trained model through a web-based application.
 
+## Main Contributions
 
-This project focuses on multiclass news classification using traditional machine learning techniques. Given the title and content of a news article, the system predicts its corresponding category.
+- End-to-end machine learning pipeline for news classification.
+- Feature engineering using TF-IDF and Chi-Square statistics.
+- Multiclass classification with One-vs-Rest Support Vector Machines.
+- Hyperparameter tuning using Grid Search.
+- FastAPI inference service.
+- Interactive React frontend for real-time predictions.
 
+---
 
+# 2. Dataset
 
-\### Objectives
+## BBC News Dataset
 
+The project uses the BBC News dataset, a widely used benchmark corpus for document classification research.
 
+The dataset contains articles belonging to five categories:
 
-\- Build a complete text classification pipeline.
+| Category | Description |
+|-----------|-------------|
+| Business | Economics, finance, and corporate news |
+| Entertainment | Movies, television, music, and media |
+| Politics | Government, elections, and public policy |
+| Sport | Sporting events and athletes |
+| Tech | Technology, software, and innovation |
 
-\- Investigate the effectiveness of TF-IDF representations.
+## Data Preparation
 
-\- Evaluate feature selection using Chi-Square statistics.
+Before training, the dataset is transformed through several preprocessing stages:
 
-\- Train a multiclass classifier using One-vs-Rest Support Vector Machines.
+- Text normalization
+- Lowercasing
+- Removal of punctuation
+- Tokenization
+- TF-IDF vectorization
 
-\- Deploy the model as a web application for real-time prediction.
+The resulting representation is a sparse high-dimensional feature matrix suitable for SVM-based learning.
 
+---
 
+# 3. Methodology
 
-\## 2. Dataset
+## Overall Pipeline
 
-
-
-The project uses the BBC News dataset, a benchmark corpus frequently used for document classification research.
-
-
-
-\### Categories
-
-
-
-The dataset contains articles from five news domains:
-
-
-
-| Label | Category |
-
-|---------|---------|
-
-| 0 | Business |
-
-| 1 | Entertainment |
-
-| 2 | Politics |
-
-| 3 | Sport |
-
-| 4 | Tech |
-
-
-
-\### Data Preparation
-
-
-
-Several preprocessing steps were applied before training:
-
-
-
-\- Lowercasing
-
-\- Punctuation removal
-
-\- Stopword filtering
-
-\- Text normalization
-
-\- TF-IDF vectorization
-
-
-
-The final feature representation is a sparse TF-IDF matrix suitable for linear SVM training.
-
-
-
-\## 3. Methodology
-
-
-
-\### Overall Pipeline
-
-
-
+```text
 Raw News Article
-
-↓
-
+        │
+        ▼
 Text Preprocessing
-
-↓
-
+        │
+        ▼
 TF-IDF Vectorization
-
-↓
-
+        │
+        ▼
 Chi-Square Feature Selection
-
-↓
-
+        │
+        ▼
 One-vs-Rest SVM
-
-↓
-
+        │
+        ▼
 Predicted Category
+```
 
+## TF-IDF Representation
 
-
-\### TF-IDF Representation
-
-
-
-Term Frequency–Inverse Document Frequency (TF-IDF) is used to transform textual documents into numerical vectors. The representation emphasizes discriminative words while reducing the impact of common terms.
-
-
-
-\### Chi-Square Feature Selection
-
-
-
-To reduce dimensionality and improve generalization, Chi-Square statistics are employed to select the most informative features for classification.
-
-
+Term Frequency–Inverse Document Frequency (TF-IDF) converts textual documents into numerical vectors by weighting terms according to both their frequency within a document and their rarity across the corpus.
 
 Benefits:
 
+- Highlights discriminative terms.
+- Suppresses common words.
+- Produces efficient sparse representations.
+- Widely adopted in Information Retrieval systems.
 
+## Chi-Square Feature Selection
 
-\- Reduced training time
+Chi-Square statistics are used to identify features that exhibit strong dependence on class labels.
 
-\- Lower memory consumption
+Feature selection provides:
 
-\- Improved interpretability
+- Reduced dimensionality
+- Faster training
+- Lower memory usage
+- Improved generalization
+- Better interpretability
 
-\- Reduced noise
+## One-vs-Rest Support Vector Machine
 
+Support Vector Machines are inherently binary classifiers.
 
+To support multiclass classification, the One-vs-Rest (OvR) strategy is employed:
 
-\### One-vs-Rest Support Vector Machine
+- Train one classifier for each category.
+- Each classifier learns to distinguish its target class from all remaining classes.
+- During inference, the classifier with the highest decision score determines the final prediction.
 
+For a dataset containing K classes:
 
+```text
+K Binary SVM Classifiers
+        ↓
+Decision Scores
+        ↓
+Highest Score Wins
+```
 
-Because SVM is inherently a binary classifier, multiclass classification is handled using the One-vs-Rest (OvR) strategy.
+---
 
+# 4. Model Training and Optimization
 
+## Hyperparameter Tuning
 
-For K classes:
+Model parameters are optimized using Grid Search.
 
+The search process evaluates multiple parameter combinations and selects the configuration yielding the best validation performance.
 
+### Tuned Parameters
 
-\- Train K independent binary classifiers.
+- Kernel type
+- Regularization parameter (C)
+- Gamma (where applicable)
 
-\- Each classifier distinguishes one class from all remaining classes.
+## Evaluation Metrics
 
-\- The classifier with the highest decision score determines the final prediction.
+The model is evaluated using:
 
+- Accuracy
+- Precision
+- Recall
+- F1-Score
 
+Additional analyses may include:
 
-\## 4. Model Optimization
+- Confusion Matrix
+- Per-class performance
+- Feature importance based on Chi-Square statistics
 
+---
 
-
-Hyperparameters were optimized using Grid Search.
-
-
-
-\### Tuned Parameters
-
-
-
-\- C
-
-\- Kernel
-
-\- Gamma (where applicable)
-
-
-
-Grid Search systematically evaluates candidate parameter combinations and selects the configuration yielding the best validation performance.
-
-\## 5. System Architecture
-
-
+# 5. System Architecture
 
 The application follows a client-server architecture.
 
+```text
+┌─────────────────────┐
+│    React Frontend   │
+└──────────┬──────────┘
+           │ HTTP
+           ▼
+┌─────────────────────┐
+│   FastAPI Backend   │
+└──────────┬──────────┘
+           │
+           ▼
+┌─────────────────────┐
+│     OvR SVM Model   │
+│   TF-IDF Vectorizer │
+│   Chi² Selector     │
+└─────────────────────┘
+```
 
+## Backend Responsibilities
 
-┌───────────────┐
+- Load trained artifacts
+- Preprocess incoming text
+- Execute inference
+- Return prediction results
 
-│ React Frontend│
+## Frontend Responsibilities
 
-└───────┬───────┘
+- User interaction
+- News article submission
+- Display prediction results
+- Communicate with backend APIs
 
-&#x20;       │ HTTP
+---
 
-&#x20;       ▼
-
-┌──────────────────┐
-
-│ FastAPI Backend  │
-
-└───────┬──────────┘
-
-&#x20;       │
-
-&#x20;       ▼
-
-┌──────────────────┐
-
-│ OvR SVM Model    │
-
-│ TF-IDF Vectorizer│
-
-│ Chi² Selector    │
-
-└──────────────────┘
-
-
-
-\### Backend Responsibilities
-
-
-
-\- Load trained artifacts
-
-\- Process user input
-
-\- Execute inference
-
-\- Return prediction results
-
-
-
-\### Frontend Responsibilities
-
-
-
-\- User interaction
-
-\- Article submission
-
-\- Visualization of prediction results
-
-\- Communication with backend API
-
-
-
-\## 6. Project Structure
-
-
+# 6. Project Structure
 
 ```text
-
 CS419-News-Classifier-Using-OvR-SVM
-
 │
-
-├── Backend/
-
+├── Backend
 │   ├── main.py
-
-│   ├── model\_utils.py
-
+│   ├── model_utils.py
 │   ├── requirements.txt
-
-│   ├── svm\_model.joblib
-
+│   ├── svm_model.joblib
 │   ├── vectorizer.joblib
-
 │   ├── selector.joblib
-
-│   ├── grid\_search.joblib
-
-│   ├── text\_classification.ipynb
-
+│   ├── grid_search.joblib
+│   ├── text_classification.ipynb
 │   ├── bbc-news-data.csv
-
-│   └── chi2\_result.csv
-
+│   └── chi2_result.csv
 │
-
-├── Frontend/
-
-│   ├── src/
-
-│   ├── public/
-
+├── Frontend
+│   ├── public
+│   ├── src
 │   ├── package.json
-
-│   └── vite.config.js
-
+│   ├── package-lock.json
+│   ├── vite.config.js
+│   └── index.html
 │
-
+├── .gitignore
 └── README.md
-
 ```
 
-\## 7. Installation
+### Important Files
 
+| File | Purpose |
+|--------|---------|
+| `text_classification.ipynb` | Model development and experimentation |
+| `vectorizer.joblib` | Saved TF-IDF vectorizer |
+| `selector.joblib` | Saved Chi-Square feature selector |
+| `svm_model.joblib` | Trained OvR-SVM classifier |
+| `grid_search.joblib` | Best model configuration from Grid Search |
+| `main.py` | FastAPI application entry point |
 
+---
 
-\### Clone Repository
+# 7. Installation
 
-
+## Clone Repository
 
 ```bash
-
-git clone https://github.com/your-username/CS419-News-Classifier-Using-OvR-SVM.git
-
-
+git clone https://github.com/<your-username>/CS419-News-Classifier-Using-OvR-SVM.git
 
 cd CS419-News-Classifier-Using-OvR-SVM
-
 ```
 
+---
 
-
-\---
-
-
-
-\## 8. Backend Setup
-
-
+## Backend Setup
 
 ```bash
-
 cd Backend
-
-
 
 python -m venv venv
 
+# Windows
+venv\Scripts\activate
 
-
-venv\\Scripts\\activate
-
-
+# Linux/macOS
+source venv/bin/activate
 
 pip install -r requirements.txt
-
 ```
 
+---
 
-
-Start FastAPI server:
-
-
+## Frontend Setup
 
 ```bash
-
-uvicorn main:app --reload
-
-```
-
-
-
-Backend will be available at:
-
-
-
-```text
-
-http://localhost:8000
-
-```
-
-
-
-\---
-
-
-
-\## 9. Frontend Setup
-
-
-
-```bash
-
 cd Frontend
 
-
-
 npm install
-
-
-
-npm run dev
-
 ```
 
+---
 
+# 8. Running the Application
 
-Frontend will be available at:
+## Start Backend
 
+```bash
+cd Backend
 
+uvicorn main:app --reload
+```
+
+Backend endpoint:
 
 ```text
-
-http://localhost:5173
-
+http://localhost:8000
 ```
 
-\## 10. Example Prediction
+API documentation:
 
+```text
+http://localhost:8000/docs
+```
 
+---
 
-\### Input
+## Start Frontend
 
+```bash
+cd Frontend
 
+npm run dev
+```
 
-Apple unveils its latest AI-powered chip designed for next-generation devices.
+Frontend endpoint:
 
+```text
+http://localhost:5173
+```
 
+---
 
-\### Output
+# 9. Prediction Workflow
 
+1. User submits a news article through the web interface.
+2. Frontend sends a request to the FastAPI backend.
+3. Backend preprocesses the text.
+4. TF-IDF vectorization is applied.
+5. Chi-Square feature selection is performed.
+6. The OvR-SVM model generates decision scores.
+7. The category with the highest score is returned.
+8. Frontend displays the prediction result.
 
+---
 
-Category: Tech
+# 10. Technologies Used
 
+## Machine Learning
 
+- Scikit-learn
+- NumPy
+- Pandas
+- Joblib
 
-Confidence: 96.4%
+## Backend
 
+- FastAPI
+- Uvicorn
 
+## Frontend
 
-\## 11. Experimental Results
+- React
+- Vite
+- JavaScript
 
+## Development
 
+- Python 3.10+
+- Node.js
+- Git
 
-Evaluation metrics:
+---
 
+# 11. References
 
+1. Joachims, T. (1998). *Text Categorization with Support Vector Machines: Learning with Many Relevant Features*.
 
-\- Accuracy
+2. Manning, C. D., Raghavan, P., & Schütze, H. *Introduction to Information Retrieval*.
 
-\- Precision
+3. BBC News Dataset.
 
-\- Recall
+4. Scikit-learn Documentation.
 
-\- F1-score
-
-
-
-The OvR-SVM model achieved strong performance on the BBC News benchmark, demonstrating that traditional machine learning approaches remain highly competitive for medium-scale text classification tasks.
-
-
-
-\## 12. Technologies Used
-
-
-
-\### Machine Learning
-
-
-
-\- Scikit-learn
-
-\- NumPy
-
-\- Pandas
-
-\- Joblib
-
-
-
-\### Backend
-
-
-
-\- FastAPI
-
-\- Uvicorn
-
-
-
-\### Frontend
-
-
-
-\- React
-
-\- Vite
-
-\- JavaScript
-
-
-
-\### Development
-
-
-
-\- Python 3.10+
-
-\- Node.js
-
-\- Git
-
-
-
-\## 13. References
-
-
-
-1\. Joachims, T. (1998). Text Categorization with Support Vector Machines.
-
-2\. Manning, C., Raghavan, P., Schütze, H. Introduction to Information Retrieval.
-
-3\. BBC News Dataset.
-
-4\. Scikit-Learn Documentation.
-
+5. Vapnik, V. N. *The Nature of Statistical Learning Theory*.
